@@ -1,7 +1,9 @@
 import React from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { useTheme } from '../context/ThemeContext.js';
 
 export default function Pagination({ currentPage, totalPages, onPageChange }) {
+  const { darkMode } = useTheme();
 
   // Không hiển thị nếu không có trang nào
   if (totalPages <= 0) return null;
@@ -24,9 +26,9 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
     fontSize: '14px',
     fontWeight: '600',
     borderRadius: '8px',
-    border: `1px solid  '#cbd5e1'}`,
-    backgroundColor: '#ffffff',
-    color: '#334155',
+    border: `1px solid ${darkMode ? '#475569' : '#cbd5e1'}`,
+    backgroundColor: darkMode ? '#1e293b' : '#ffffff',
+    color: darkMode ? '#f8fafc' : '#334155',
     cursor: 'pointer',
     transition: 'all 0.2s ease',
     userSelect: 'none'
@@ -36,8 +38,9 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
     ...baseButtonStyle,
     opacity: 0.45,
     cursor: 'not-allowed',
-    backgroundColor: '#f1f5f9',
-    color: '#94a3b8'
+    backgroundColor: darkMode ? '#0f172a' : '#f1f5f9',
+    color: darkMode ? '#64748b' : '#94a3b8',
+    borderColor: darkMode ? '#334155' : '#e2e8f0'
   };
 
   const getPageNumberStyle = (pageNum) => {
@@ -97,13 +100,13 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         title="Trang trước"
       >
         <FaChevronLeft style={{ fontSize: '12px' }} />
-        <span>Previous page</span>
+        <span>Trang trước</span>
       </button>
 
       {/* Danh sách các số trang: 1, 2, 3, ..., [total page] */}
       {renderPageNumbers()}
 
-      {/* Nút after page (disable ở trang [total page]) */}
+      {/* Nút next page (disable ở trang [total page]) */}
       <button
         type="button"
         style={isLastPage ? disabledButtonStyle : baseButtonStyle}
@@ -111,7 +114,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         onClick={() => !isLastPage && onPageChange(currentPage + 1)}
         title="Trang kế tiếp"
       >
-        <span>After page</span>
+        <span>Trang sau</span>
         <FaChevronRight style={{ fontSize: '12px' }} />
       </button>
     </div>

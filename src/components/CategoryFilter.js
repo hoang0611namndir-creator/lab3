@@ -13,8 +13,8 @@ export default function CategoryFilter({ filter, onFilterChange, sortBy, onSortC
     color: darkMode ? '#f8fafc' : '#0f172a',
     cursor: 'pointer',
     outline: 'none',
-    transition: 'border-color 0.2s ease',
-    minWidth: '150px'
+    transition: 'border-color 0.2s ease, background-color 0.2s ease',
+    minWidth: '160px'
   };
 
   return (
@@ -24,13 +24,13 @@ export default function CategoryFilter({ filter, onFilterChange, sortBy, onSortC
         value={filter}
         onChange={(e) => onFilterChange(e.target.value)}
         style={selectStyle}
-        aria-label="Filter by genre"
+        aria-label="Lọc theo danh mục"
       >
-        <option value="all"> Tất cả</option>
-        <option value="Phone">Điện Thoại</option>
-        <option value="Tablet">Máy tính bảng</option>
+        <option value="all">Tất cả danh mục</option>
+        <option value="Điện thoại">Điện thoại</option>
         <option value="Laptop">Laptop</option>
-        <option value="Custom">Phụ kiện</option>
+        <option value="Máy tính bảng">Máy tính bảng</option>
+        <option value="Phụ kiện">Phụ kiện</option>
       </select>
 
       {/* Sắp xếp */}
@@ -38,11 +38,11 @@ export default function CategoryFilter({ filter, onFilterChange, sortBy, onSortC
         value={sortBy}
         onChange={(e) => onSortChange(e.target.value)}
         style={selectStyle}
-        aria-label="Sort movies"
+        aria-label="Sắp xếp sản phẩm"
       >
         <option value="default">Sắp xếp mặc định</option>
-        <option value="title-asc">Tên  (A → Z)</option>
-        <option value="title-desc">Tên  (Z → A)</option>
+        <option value="title-asc">Tên (A → Z)</option>
+        <option value="title-desc">Tên (Z → A)</option>
         <option value="price-desc">Giá (Cao → Thấp)</option>
         <option value="price-asc">Giá (Thấp → Cao)</option>
       </select>

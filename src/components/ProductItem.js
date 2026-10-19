@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext.js';
-import {  FaInfoCircle } from 'react-icons/fa';
+import { FaInfoCircle } from 'react-icons/fa';
 
 export default function ProductItem({ product }) {
   const { darkMode } = useTheme();
@@ -18,7 +18,7 @@ export default function ProductItem({ product }) {
     boxShadow: darkMode
       ? '0 4px 6px -1px rgba(0, 0, 0, 0.3)'
       : '0 2px 8px rgba(0, 0, 0, 0.06)',
-    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+    transition: 'transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease',
     boxSizing: 'border-box'
   };
 
@@ -38,18 +38,6 @@ export default function ProductItem({ product }) {
     lineHeight: '1.3'
   };
 
-  const starButtonStyle = {
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    padding: '4px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '22px',
-    transition: 'transform 0.15s ease, color 0.15s ease'
-  };
-
   const badgeStyle = {
     display: 'inline-block',
     fontSize: '12px',
@@ -61,13 +49,10 @@ export default function ProductItem({ product }) {
     marginRight: '8px'
   };
 
-  const metaStyle = {
-    fontSize: '13px',
-    color: darkMode ? '#94a3b8' : '#64748b',
-    marginTop: '6px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px'
+  const priceStyle = {
+    fontSize: '15px',
+    fontWeight: '700',
+    color: '#0284c7'
   };
 
   const descriptionStyle = {
@@ -85,7 +70,7 @@ export default function ProductItem({ product }) {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: '6px',
+    gap: '8px',
     width: '100%',
     padding: '10px 16px',
     fontSize: '14px',
@@ -98,11 +83,15 @@ export default function ProductItem({ product }) {
     transition: 'background-color 0.2s ease'
   };
 
+  const formattedPrice = typeof product.price === 'number'
+    ? `${product.price.toLocaleString('vi-VN')} ₫`
+    : product.price;
+
   return (
     <div
       style={cardStyle}
       onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-2px)';
+        e.currentTarget.style.transform = 'translateY(-3px)';
         e.currentTarget.style.boxShadow = darkMode
           ? '0 10px 15px -3px rgba(0, 0, 0, 0.5)'
           : '0 8px 16px rgba(0, 0, 0, 0.1)';
@@ -116,14 +105,13 @@ export default function ProductItem({ product }) {
     >
       <div>
         <div style={headerRowStyle}>
-          <h3 style={titleStyle}>{product.title}</h3>
-          
+          <h3 style={titleStyle}>{product.name || product.title}</h3>
         </div>
 
-        <div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '6px' }}>
           <span style={badgeStyle}>{product.category}</span>
-          <span style={{ fontSize: '13px', fontWeight: '500', color: darkMode ? '#cbd5e1' : '#64748b' }}>
-            Giá :  {product.price}
+          <span style={priceStyle}>
+            {formattedPrice}
           </span>
         </div>
 
@@ -132,13 +120,12 @@ export default function ProductItem({ product }) {
 
       <div>
         <button
-          onClick={() => navigate(`/list/${product.id}`)}
+          onClick={() => navigate(`/products/${product.id}`)}
           style={detailBtnStyle}
           onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#0369a1')}
           onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#0284c7')}
         >
-          <FaInfoCircle />
-          <span>Product Detail</span>
+          <span>Chi tiết sản phẩm</span>
         </button>
       </div>
     </div>

@@ -6,21 +6,21 @@ import { products } from './data/products.js';
 import ProductList from './pages/ProductList.js';
 import NotFound from './pages/NotFound.js';
 import ProductDetail from './pages/ProductDetail.js';
+import { ThemeProvider } from './context/ThemeContext.js';
 
 function MainApp() {
- 
-
   return (
     <BrowserRouter>
       <div style={{ width: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         <Header />
         <main style={{ flex: 1, width: '100%' }}>
           <Routes>
-            <Route path="/" element={<Home products={products}/>} />
+            <Route path="/" element={<Home products={products} />} />
+            <Route path="/home" element={<Navigate to="/" replace />} />
             <Route path="/products" element={<ProductList products={products} />} />
-             <Route path="/products/:id" element={<ProductDetail products={products}  />} />
-            <Route path="/invalid-url" element={<NotFound/>}/>
-            {/* Redirect mọi route không hợp lệ về trang chủ */}
+            <Route path="/products/:id" element={<ProductDetail products={products} />} />
+            <Route path="/invalid-url" element={<NotFound />} />
+            {/* Redirect mọi route không hợp lệ về trang NotFound */}
             <Route path="*" element={<Navigate to="/invalid-url" replace />} />
           </Routes>
         </main>
@@ -31,6 +31,8 @@ function MainApp() {
 
 export default function App() {
   return (
+    <ThemeProvider>
       <MainApp />
+    </ThemeProvider>
   );
 }
